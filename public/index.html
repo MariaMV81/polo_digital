@@ -18,6 +18,28 @@
     
     <!--CSS-->
     <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .carousel-caption{
+            top: 1.25rem;
+        }
+        footer ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .carousel-item{
+            height: 560px;
+            background-size: cover;
+            background-position: center center;
+        }
+        @media (max-width: 992px){
+            .carousel-item{
+                height: 400px;
+            }
+        }
+
+    </style>
     
     
 </head>
@@ -43,13 +65,13 @@
           <a class="nav-link" href="#">Inventario</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Salas</a>
+          <a class="nav-link" href="#">Eventos</a>
         </li>
       </ul>
-      <!-- <form class="d-flex" role="search">
+      <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Buscar</button>
-      </form> -->
+        <button class="btn btn-outline-success" type="submit">LOGOUT</button>
+      </form>
     </div>
   </div>
 </nav>
@@ -62,21 +84,21 @@
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="imagenes/polo-digital.png" class="d-block w-100" alt="...">
+      <img src="imagenes/polo_negro.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Some representative placeholder content for the first slide.</p>
+        <h5>Eventos del Polo Digital</h5>
+        <p>Registrate para acceder a todos nuestros eventos</p>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="imagenes/polo_negro.jpg" class="d-block w-100" alt="...">
+      <img src="imagenes/fachada_polo.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>Second slide label</h5>
         <p>Some representative placeholder content for the second slide.</p>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="imagenes/polo_blanco.png" class="d-block w-100" alt="...">
+      <img src="imagenes/images_polo_digital.png" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>Third slide label</h5>
         <p>Some representative placeholder content for the third slide.</p>
@@ -94,32 +116,68 @@
 </div>
 
 <!-- Footer -->
+      <footer>
+          <div class="wrap">
+            <div class="izq">
+              <h4 class="logo">Polo Digital</h4>
+              <div class="politicas">
+                <nav>
+                  <ul>
+                    <li><a href="#">Que es Polo</a></li>
+                    <li><a href="#">Instalaciones</a></li>
+                    <li><a href="#">Equipamiento</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Habitantes</a></li>
+                  </ul>
+                </nav>
+                <nav>
+                  <ul>
+                    <li><a href="#">Formación</a></li>
+                    <li><a href="#">Programas</a></li>
+                    <li><a href="#">Eventos</a></li>
+                    <li><a href="#">Corporate</a></li>
+                    <li><a href="#">Politicas</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <div class="der">
+              <h4>Contactanos</h4>
 
-  <div>FOOTER</div>
+              <form action="">
+
+                <div class="input-grp">
+                    <label for="">Email*</label>
+                    <input type="email" placeholder="email">
+                    <div class="error">Por favor, inserta un email válido</div>
+                </div>
+
+                <div class="input-grp">
+                  <label for="">
+                    <input type="checkbox">
+                    <span>Acepta nuestra <a href="#">politica</a> de privacidad</span>
+                  </label>
+                  <div class="error">Por favor, rellena tu apellido</div>
+                </div>
+
+                <input type="submit" class="btn btn-block" value="Iniciar sesión">
+
+              </form>
+
+              <div class="rrss">
+                <h5>Síguenos en redes</h5>
+                <div>
+                  <a href="#"><i class="bi bi-facebook"></i></a>
+                  <a href="#"><i class="bi bi-twitter"></i></a>
+                  <a href="#"><i class="bi bi-instagram"></i></a>
+                  <a href="#"><i class="bi bi-twitch"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
 
 
-
-
-
-
-
-
-
-
-        <div>Menu</div><br/>
-        <div>listado / carrusel de eventos</div>
-
-        <navbar>
-            <ul>
-                <li>Clientes</li>
-                <li>Mobiliario</li>
-                <li>Inventario</li>
-                <li>Salas</li>
-                <li></li>
-            </ul>
-        </navbar>
-    </header>
-    <di>Footer</di>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

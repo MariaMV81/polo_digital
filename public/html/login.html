@@ -6,6 +6,34 @@
     <title>Login</title>
 </head>
 <body>
+    <section className="formulario container">
+      <div className="iniciarsesion">
+        <h2>Iniciar sesión</h2>
+        <p>Accede con tus datos anteriores</p>
+
+        <form id="formulario" onSubmit={handleSubmit} autoComplete="off">
+          <div className="input-button">
+            <input
+              id="email"
+              type="email"
+              placeholder="Introduce email válido"
+            
+            />
+            <input
+              id="password"
+              type="password"
+              placeholder="Introduce contraseña"
+            />
+            <div>
+              <button className="button" type="submit" >
+                Iniciar sesión
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+ 
     
 </body>
 </html>
