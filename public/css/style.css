@@ -16,21 +16,42 @@ body {
 
 /* Estilos para el header y navegación */
 .navbar {
-    background-color: #ddd;
+    background-color:rgb(2, 2, 83);
 }
 
 .navbar-nav {
-    margin: 0;
+    margin: 40px;
 }
 
 .nav-link {
-    color: #000000;
-    margin-right: 20px;
+    color: #aec9e4;
+    margin-right: 40px;
+    padding-right: 50px;
+}
+.nav-link :hover {
+    color: rgb(220, 220, 230);
+ 
+ 
 }
 
 .form-control {
     margin-right: 10px;
     
+}
+
+.btn-primary-dark {
+    background-color: #0672dd;
+    /* Aquí puedes usar el color de fondo que desees */
+    border-color: #064f97;
+    /* Cambia el color del borde si es necesario */
+}
+
+.btn-primary-dark:hover {
+    background-color: #648eb8;
+    /* Cambia el color al pasar el cursor por encima, si lo deseas */
+    border-color: #648eb8;
+    /* Borde al pasar el cursor por encima */
+    /* Otros estilos hover si son necesarios */
 }
 
 /* Estilos para el carrusel */
@@ -42,10 +63,12 @@ body {
 }
 
 h1{
+    font-size: 2em;
     color: #062444;
 }
 
 p{
+    font-size: 1.2em;
     color: #062444;
 }
 
@@ -66,10 +89,11 @@ footer {
     margin-top: 50px;
 }
 
+
 footer ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
+    padding: 10px;
+    margin: 20px;
 }
 
 .izq {
@@ -115,7 +139,7 @@ input[type="email"] {
 .btn-block {
     display: block;
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     border: none;
     border-radius: 5px;
     background-color: #062444;
@@ -129,7 +153,7 @@ input[type="email"] {
 
 .rrss a {
     margin-right: 10px;
-    color: #000;
+    color: rgb(0, 0, 0);
 }
 
 /* Resto de estilos */

@@ -1,51 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobiliriario</title>
-</head>
-<body>
-    
-    <section className="formulario container">
-      <div className="registrarse">
-        <h2>Regístrate</h2>
-        <p>
-          Regístrate para acceder como cliente.
-        </p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mobiliario</title>
+    <link rel="stylesheet" href="/public/css/clientes.css" />
+  </head>
+  <body>
+    <div class="listado-container">
+      <ul class="listadoClientes">
+        <li>Mobiliario1</li>
+        <li>Mobiliario2</li>
+        <li>Mobiliario3</li>
+        <li>Mobiliario4</li>
+        <li>Mobiliario5</li>
+      </ul>
+    </div>
+<div className="formulario-container"></div>
+    <section className="registrarse">
+      
+        <h1>Mobiliario</h1>
+        <p>Rellene o modifique los datos</p>
 
         <form>
           <div className="input-button">
-            <input
-              type="text"
-              placeholder="Nombre"
-              name="Name"
-            />
-            <input
-              type="text"
-              placeholder="Apellidos"
-              name="Surname"
-            />
-            <input
-              type="email"
-              placeholder="email"
-              name="email"
-            />
-            <input
-              type="password"
-              required
-              placeholder="contraseña"
-              name="password"
-            />
+            <input type="text" placeholder="Nombre" name="Nombre" />
+            <input type="text" placeholder="Referencia" name="referencia" />
+            <input type="text" placeholder="Tipo" name="tipo" />
+            <input type="text" placeholder="Estado" name="estado" />
+            
+            
           </div>
           <div>
-            <button className="button" type="submit" >
-              Crear cuenta ahora
-            </button>
+            <button className="button" type="submit">Enviar</button>
           </div>
         </form>
-      </div>
+      
     </section>
-    
-</body>
+</div>
+  </body>
 </html>
