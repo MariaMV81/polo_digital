@@ -82,14 +82,14 @@ app.get("/evento/:idEvento", function (request, response) {
  * Endpoints para login y registro ---------------------------------------------------------------------
  * Ejemplo URL: http://localhost:8000/login?email=isare@email.com&password=1234
  */
-app.get("/login", function (request, response) {
-  const email = request.query.email;
-  const password = request.query.password;
+app.post("/login", function (request, response) {
+  const email = request.body.email;
+  const password = request.body.password;
   const modoNuevo = `select * from usuarios where email = '${email}' and password = '${password}'`;
 
   console.log(modoNuevo);
 
-  connection.query(
+  connection.body(
     "select * from usuarios where email = '" +
       email +
       "' and password = '" +
@@ -108,8 +108,6 @@ app.get("/login", function (request, response) {
     }
   );
 });
-
-
 
 // 1. insert into usuarios
 // 2. select from usuarios
@@ -135,7 +133,6 @@ app.post("/registro", function (request, response) {
       }
 
       console.log("Usuario Insertado");
-
 
       // 2. Seleccionar desde usuarios el id que hemos creado
       connection.query(
@@ -166,7 +163,7 @@ app.post("/registro", function (request, response) {
           // );
 
           connection.query(
-            "INSERT INTO empleados_clientes (nombre, apellidos, usuarioID, clienteID, dni, telefono) VALUES (?, ?, ?, ?, ?, ?)", //? marcador de posicion: especigica los valores que se van a insertar, en lugar de valores concretos
+            "INSERT INTO empleados_clientes (nombre, apellidos, usuarioID, clienteID, dni, telefono) VALUES (?, ?, ?, ?, ?, ?)", //? marcador de posicion: especifica los valores que se van a insertar, en lugar de valores concretos
             [nombre, apellidos, usuarioid, clienteID, dni, telefono], //valores reales que se insertaran en esta columna se pasan como array en el segundo argumento de la función y sonn las variables que hemos declarado al principio
             function (error, result, fields) {
               if (error) {
@@ -184,17 +181,115 @@ app.post("/registro", function (request, response) {
               response.send({ message: "registro" });
             }
           );
-
-          
         }
       );
     }
   );
 });
 
-
 /**
  * Termina Login y Registro ---------------------------------------------------------------------------
+ */
+
+/**
+ * Endpoints para clientes-----------------------------------------------------------------------------
+ */
+
+app.get(`/clientes`, function (request, response) {
+  connection.query(`select * from clientes`, function (error, result, sield) {
+
+    let cliente = [];
+    for (let i = 0; i < result.length; i++){
+
+      cliente[i] = result[i];
+    }
+
+    response.send(cliente);
+
+    if (error) {
+      console.error(error);
+      response
+        .status(500)
+        .send("Error al traer la tabla clientes " );
+      return;
+    }
+  });
+  console.log("Listado de clientes en base de datos");
+});
+
+
+
+app.post("/clientes/:id", function (request, response) {
+  let razon_social = request.body.razon_social;
+  let cif = request.body.cif;
+  let sector = request.body.sector;
+  let telefono = request.body.telefono;
+  let numero_empleados = request.body.numero_empleados;
+  const clienteID = request.params.id;
+
+ connection.query( `UPDATE clientes SET razon_social = "${razon_social}", cif = "${cif}", sector ="${sector}" , telefono = "${telefono}", numero_empleados = "${numero_empleados}" WHERE id = ${clienteID}`,
+    function (error, result, field) {
+      if (error) {
+        console.error(error);
+        response
+          .status(500)
+          .send(
+            "Error al insertar en la tabla empleados_clientes: " + error.message);
+        return;
+      }
+       response.send("Actualización de cliente en la base de datos");
+    });
+   
+ 
+});
+
+
+
+app.post("/clientes", function (request, response) {
+   let razon_social = request.body.razon_social;
+   let cif = request.body.cif;
+   let sector = request.body.sector;
+   let telefono = request.body.telefono;
+   let numero_empleados = request.body.numero_empleados; 
+   
+   connection.query(`INSERT INTO clientes (razon_social, cif, sector, telefono, numero_empleados) VALUES (?, ?, ?, ?, ?)`,
+   [razon_social, cif, sector, telefono, numero_empleados],
+    function (error, result, fields) {
+      if (error) {
+        console.error(error);
+        response.status(500).send("Error al crear el cliemte");
+        return;
+      }
+
+      console.log("Cliente Insertado");
+      response.send({ message: "cliente insertado" });
+   })
+});
+
+
+/*extra*/
+app.get("/clientes/:idClientes", function (request, response) {
+  const idClientes = request.params.idClientes; 
+
+  connection.query(
+    `SELECT * FROM clientes WHERE id = ${idClientes}`,
+    function (error, result, fields) {
+      if (error) {
+        console.error(error);
+        response.status(500).send("Error al obtener el cliente");
+        return;
+      }
+
+      console.log("Datos del cliente con el ID " + idClientes + ":", result);
+      response.send(result); // Enviar los datos del cliente al cliente que realiza la solicitud
+    }
+  );
+});
+  
+
+
+/**
+ * Termina clientes-----------------------------------------------------------------------------------------------
  */
 
 app.listen(8000, function () {
