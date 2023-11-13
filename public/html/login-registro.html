@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login y Registro</title>
+    <link rel="stylesheet" href="/public/css/login-registro.css" />
+  </head>
+  <body>
+    <div class="formulario-container">
+      <section class="iniciarsesion">
+        <h2>Iniciar sesión</h2>
+        <p>Accede con tus datos anteriores</p>
+
+        <form id="formularioIniciar" autocomplete="off">
+          <div class="input-button">
+            <input
+              id="email"
+              class="estilo-input"
+              type="email"
+              placeholder="Introduce email válido"
+            />
+            <input
+              id="password"
+              class="estilo-input"
+              type="password"
+              placeholder="Introduce contraseña"
+            />
+            <div>
+              <button class="button" type="submit">Iniciar sesión</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <section class="iniciarsesion">
+        <h2>Regístrate</h2>
+        <p>Podrás acceder a todo nuestro contenido</p>
+
+        <form id="formularioRegistro" autocomplete="off">
+          <div class="input-button">
+            <input
+              class="estilo-input"
+              type="text"
+              placeholder="Nombre"
+            />
+            <input
+              class="estilo-input"
+              type="text"
+              placeholder="Apellidos"
+            />
+            <input
+              class="estilo-input"
+              type="email"
+              placeholder="Introduce tu email"
+            />
+            <input
+              class="estilo-input"
+              type="password"
+              placeholder="Introduce tu contraseña"
+            />
+            
+            <div>
+              <button class="button" type="submit">Enviar</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </body>
+</html>
