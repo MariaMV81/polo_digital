@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/public/css/login-registro.css" />
   </head>
   <body>
-    <div class="formulario-container">
+    <div id="menu" class="formulario-container">
       <section class="iniciarsesion">
         <h2>Iniciar sesión</h2>
         <p>Accede con tus datos anteriores</p>
@@ -27,7 +27,7 @@
               placeholder="Introduce contraseña"
             />
             <div>
-              <button class="button" type="submit">Iniciar sesión</button>
+              <button class="button" type="submit" onclick="login()">Iniciar sesión</button>
             </div>
           </div>
         </form>
@@ -67,5 +67,6 @@
         </form>
       </section>
     </div>
+    <script src="/public/js/login.js"></script>
   </body>
 </html>

@@ -2,7 +2,7 @@ let express = require("express");
 let mysql = require("mysql2");
 const app = express();
 
-app.use(express.static("public"));
+app.use("/",express.static("public"));
 app.use(express.json()); //oye que cuando haya body va a ser un json
 
 // crear conexion con mysql
@@ -43,7 +43,7 @@ function handleSQLError(response, error, result, callback) {
  * Endpoints para el Index. ----------------------------------------------------------------------------
  */
 app.get("/carrusel", function (request, response) {
-  connection.query("select * from usuarios", function (error, result, fields) {
+  connection.query("select * from eventos", function (error, result, fields) {
     handleSQLError(response, error, result, function (result) {
       let total = request.query.total;
       let eventos = [];
@@ -61,7 +61,7 @@ app.get("/evento/:idEvento", function (request, response) {
   const idEvento = request.params.idEvento;
 
   connection.query(
-    `select * from usuarios where id = ${idEvento}`,
+    `select * from eventos where id = ${idEvento}`,
     function (error, result, fields) {
       handleSQLError(response, error, result, function (result) {
         if (result.length == 0) {
@@ -289,7 +289,15 @@ app.get("/clientes/:idClientes", function (request, response) {
 
 
 /**
- * Termina clientes-----------------------------------------------------------------------------------------------
+ * Termina clientes -----------------------------------------------------------------------------------------------
+ */
+
+/**
+ * Endpoints mobilirio -----------------------------------------------------------------------------------------------
+ */
+
+/**
+ * Termina mobiliario -----------------------------------------------------------------------------------------------
  */
 
 app.listen(8000, function () {
