@@ -89,7 +89,7 @@ app.post("/login", function (request, response) {
 
   console.log(modoNuevo);
 
-  connection.body(
+  connection.query(
     "select * from usuarios where email = '" +
       email +
       "' and password = '" +
@@ -147,7 +147,7 @@ app.post("/registro", function (request, response) {
           const usuarioid = result[0].id;
           // 3. Insertar en la tabla empleados_clientes el id del nuevo usuario creado
           // connection.query(
-          //   `INSERT INTO empleados_clientes (nombre, apellidos, usuarioID, clienteID, dni, telefono) VALUES ('${nombre}', '${apellidos}', '${usuarioid}', '${clienteID}', '${dni}', '${telefono}')`,
+          //   `INSERT INTO empleados_clientes (nombre, apellidos, usuarioID, clienteID, dni, razon_social, telefono) VALUES ('${nombre}', '${apellidos}', '${usuarioid}', '${clienteID}', '${dni}', '${telefono}')`,
           //   function (error, result, fields) {
           //     if (error) {
           //       console.error(error);

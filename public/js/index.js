@@ -9,7 +9,7 @@ window.addEventListener("load", function(event){
             const containerDiv = document.getElementById("container");
             containerDiv.innerHTML = "<ul>";
             for ( let i = 0; i < json.length; i++){
-                containerDiv.innerHTML += `<li>${json[i].nombre} / ${json[i].organizado}</li><button onClick ="carruselClick(${json[i].id})">+ info</button>`;
+                containerDiv.innerHTML += `<li><b>${json[i].nombre}</b> / ${json[i].organizado}</li><button onClick ="carruselClick(${json[i].id})">+ info</button>`;
             }
 
             containerDiv.innerHTML += "</ul>";
@@ -30,7 +30,7 @@ function carruselClick(eventosID) {
         return response.json();
     }).then(function(json) {
         const containerDiv = document.getElementById("container");
-        containerDiv.innerHTML = `<h2>Bienvenidos a  ${json.nombre} </h2><button onClick ="inicioClick()">regresar</button> `;
+        containerDiv.innerHTML = `<h2>Bienvenidos a  <b>${json.nombre}</b> </h2><button onClick ="inicioClick()">regresar</button> `;
         console.log(json)
     }).catch(function(error){
         console.log(error);

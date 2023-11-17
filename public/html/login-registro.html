@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login y Registro</title>
-    <link rel="stylesheet" href="/public/css/login-registro.css" />
+    <link rel="stylesheet" href="/css/login-registro.css" />
   </head>
   <body>
     <div id="menu" class="formulario-container">
@@ -27,7 +27,7 @@
               placeholder="Introduce contraseña"
             />
             <div>
-              <button class="button" type="submit" onclick="login()">Iniciar sesión</button>
+              <button class="button" type="button" onclick="login()">Iniciar sesión</button>
             </div>
           </div>
         </form>
@@ -40,33 +40,55 @@
         <form id="formularioRegistro" autocomplete="off">
           <div class="input-button">
             <input
+              id="nombre"
               class="estilo-input"
               type="text"
               placeholder="Nombre"
             />
             <input
+              id="apellidos"
               class="estilo-input"
               type="text"
               placeholder="Apellidos"
             />
             <input
+              id="dni"
+              class="estilo-input"
+              type="text"
+              placeholder="DNI"
+            />
+            <input
+              id="razon_social"
+              class="estilo-input"
+              type="text"
+              placeholder="Razón Social"
+            />
+            <input
+              id="emailr"
               class="estilo-input"
               type="email"
               placeholder="Introduce tu email"
             />
             <input
+              id="passwordr"
               class="estilo-input"
               type="password"
               placeholder="Introduce tu contraseña"
             />
+            <input
+              id="passwordrr"
+              class="estilo-input"
+              type="password"
+              placeholder="Repita su contraseña"
+            />
             
             <div>
-              <button class="button" type="submit">Enviar</button>
+              <button class="button" type="button" onclick="registro()">Enviar</button>
             </div>
           </div>
         </form>
       </section>
     </div>
-    <script src="/public/js/login.js"></script>
+    <script src="/js/login.js"></script>
   </body>
 </html>

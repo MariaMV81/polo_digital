@@ -4,10 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Clientes</title>
-    <link rel="stylesheet" href="/public/css/clientes.css" />
+    <link rel="stylesheet" href="/css/clientes.css" />
+    <style>
+      #listado-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            list-style-type: none;
+            margin-bottom: 10px;
+        }
+    </style>
   </head>
   <body>
-    <div class="listado-container">
+    <div id="listado-clientes" class="listado-container">
       <ul class="listadoClientes">
         <li>cliente1</li>
         <li>cliente2</li>
@@ -24,18 +44,22 @@
 
         <form>
           <div className="input-button">
-            <input type="text" placeholder="Razón social" name="Razón social" />
-            <input type="text" placeholder="CIF" name="CIF" />
-            <input type="text" placeholder="Sector" name="Sector" />
-            <input type="number" placeholder="Teléfono" name="Teléfono" />
-            <input type="number" placeholder="Nº de Empleados" name="Nº de Empleados"/>
+            <input id="razon_social"  type="text" placeholder="Razón social"  />
+            <input id="cif" type="text" placeholder="CIF"  />
+            <input id="sector" type="text" placeholder="Sector" />
+            <input id="telefono" type="number" placeholder="Teléfono" />
+            <input id="numero_empleados" type="number" placeholder="Nº de Empleados" />
           </div>
           <div>
-            <button className="button" type="submit">Enviar</button>
+            <button className="button" type="button" onclick="registroClientes()">Enviar</button>
           </div>
+          
         </form>
       
     </section>
 </div>
+
+<script src="/js/clientes.js"></script>
+
   </body>
 </html>
