@@ -145,23 +145,8 @@ app.post("/registro", function (request, response) {
           }
 
           const usuarioid = result[0].id;
+x
           // 3. Insertar en la tabla empleados_clientes el id del nuevo usuario creado
-          // connection.query(
-          //   `INSERT INTO empleados_clientes (nombre, apellidos, usuarioID, clienteID, dni, razon_social, telefono) VALUES ('${nombre}', '${apellidos}', '${usuarioid}', '${clienteID}', '${dni}', '${telefono}')`,
-          //   function (error, result, fields) {
-          //     if (error) {
-          //       console.error(error);
-          //       response
-          //         .status(500)
-          //         .send("Error al insertar en la tabla empleados_clientes");
-          //       return;
-          //     }
-
-          //     console.log("Registro completado");
-          //     response.send({ message: "registro" });
-          //   }
-          // );
-
           connection.query(
             "INSERT INTO empleados_clientes (nombre, apellidos, usuarioID, clienteID, dni, telefono) VALUES (?, ?, ?, ?, ?, ?)", //? marcador de posicion: especifica los valores que se van a insertar, en lugar de valores concretos
             [nombre, apellidos, usuarioid, clienteID, dni, telefono], //valores reales que se insertaran en esta columna se pasan como array en el segundo argumento de la función y sonn las variables que hemos declarado al principio
@@ -174,7 +159,7 @@ app.post("/registro", function (request, response) {
                     "Error al insertar en la tabla empleados_clientes: " +
                       error.message
                   );
-                return;
+                return;          ghvbv
               }
 
               console.log("Registro completado");
@@ -195,6 +180,9 @@ app.post("/registro", function (request, response) {
  * Endpoints para clientes-----------------------------------------------------------------------------
  */
 
+
+//Realiza una consulta a la base de datos para seleccionar todos los registros de la tabla "clientes". Luego devuelve estos datos en formato
+//json como respuesta al cliente que realizó la solicitud.
 app.get(`/clientes`, function (request, response) {
   connection.query(`select * from clientes`, function (error, result, sield) {
 
@@ -219,12 +207,16 @@ app.get(`/clientes`, function (request, response) {
 
 
 
+//Se uliliza para actualizar un cliente existente en la base de datos. Recibe los datos del cliente a través del cuerpo de la solicitud(razon_social...)
+//y el ID del cliente a actualizar se extra de los parametros de la url(":id"). Realiza una consulta"UPDATE" en la bbdd para modificar los datos del 
+//cliente con el id proporcinado
 app.post("/clientes/:id", function (request, response) {
   let razon_social = request.body.razon_social;
   let cif = request.body.cif;
   let sector = request.body.sector;
   let telefono = request.body.telefono;
   let numero_empleados = request.body.numero_empleados;
+
   const clienteID = request.params.id;
 
  connection.query( `UPDATE clientes SET razon_social = "${razon_social}", cif = "${cif}", sector ="${sector}" , telefono = "${telefono}", numero_empleados = "${numero_empleados}" WHERE id = ${clienteID}`,
@@ -240,33 +232,68 @@ app.post("/clientes/:id", function (request, response) {
        response.send("Actualización de cliente en la base de datos");
     });
    
- 
-});
+  });
 
-
-
+//Crea un nuevo cliente en la bbdd. Al igual que el anterior, recibe los datos del cliente en el cuerpo de la solicitud y el ID del cliente a través de clienteID
+// Antes de realizar la inserción, verifica si ya existe un cliente con el mismo ID. Si el ID ya está en uso, devuelve un código de estado 400 indicando que ya existe 
+//un cliente con ese ID. Si no hay conflictos, realiza la inserción en la base de datos y devuelve un mensaje indicando que el cliente se ha insertado correctamente
 app.post("/clientes", function (request, response) {
-   let razon_social = request.body.razon_social;
-   let cif = request.body.cif;
-   let sector = request.body.sector;
-   let telefono = request.body.telefono;
-   let numero_empleados = request.body.numero_empleados; 
-   
-   connection.query(`INSERT INTO clientes (razon_social, cif, sector, telefono, numero_empleados) VALUES (?, ?, ?, ?, ?)`,
-   [razon_social, cif, sector, telefono, numero_empleados],
+  const razon_social = request.body.razon_social;
+  const cif = request.body.cif;
+  const sector = request.body.sector;
+  const telefono = request.body.telefono;
+  const numero_empleados = request.body.numero_empleados;
+
+
+  if (
+    !razon_social ||
+    !cif ||
+    !sector ||
+    !telefono ||
+    !numero_empleados 
+  ) {
+    return response.status(400).send("Faltan datos obligatorios");
+  }
+
+  // Verificar si ya existe un cliente con el mismo ID
+  connection.query(
+    `SELECT * FROM clientes WHERE id = ${clienteID}`,
     function (error, result, fields) {
       if (error) {
         console.error(error);
-        response.status(500).send("Error al crear el cliemte");
+        response.status(500).send("Error al buscar el cliente por ID");
         return;
       }
 
-      console.log("Cliente Insertado");
-      response.send({ message: "cliente insertado" });
-   })
+      // Si el cliente con el ID proporcionado ya existe, devolver un mensaje de error
+      if (result.length > 0) {
+        response.status(400).send("Ya existe un cliente con este ID");
+        return;
+      }
+
+      // Insertar el nuevo cliente en la base de datos
+
+      connection.query(
+        `INSERT INTO clientes (razon_social, cif, sector, telefono, numero_empleados) VALUES ('${razon_social}', '${cif}', '${sector}', '${telefono}', '${numero_empleados}')`,
+        function (error, result, fields) {
+          if (error) {
+            console.error(error);
+            response.status(500).send("Error al crear el cliente");
+            return;
+          }
+
+          console.log("Cliente Insertado");
+          response
+            .status(200)
+            .json({ message: "Cliente insertado correctamente" });
+        }
+      );
+    }
+  );
 });
 
-
+//Este endpoint se utiliza para obtener información detallada de un cliente específico. Recibe el ID del cliente a través de los parámetros de la URL (:idClientes),
+// realiza una consulta a la base de datos para seleccionar ese cliente en particular y devuelve los datos en formato JSON como respuesta al cliente que realizó la solicitud
 /*extra*/
 app.get("/clientes/:idClientes", function (request, response) {
   const idClientes = request.params.idClientes; 

@@ -28,7 +28,7 @@
   </head>
   <body>
     <div id="listado-clientes" class="listado-container">
-      <ul class="listadoClientes">
+      <ul class="listadoClientes" id="clientes-list">
         <li>cliente1</li>
         <li>cliente2</li>
         <li>cliente3</li>
@@ -36,24 +36,39 @@
         <li>cliente5</li>
       </ul>
     </div>
-<div className="formulario-container"></div>
-    <section className="registrarse">
+
+
+<div class="formulario-container"></div>
+    <section class="registrarse">
       
         <h1>Formulario de Clientes</h1>
-        <p>Rellene o modifique sus datos</p>
+        <p>Rellene sus datos</p>
 
-        <form>
-          <div className="input-button">
-            <input id="razon_social"  type="text" placeholder="Razón social"  />
+        <form >
+          <div id="formulario-registro-clientes" > 
+            <input id="razon_social"  type="text" placeholder="Razón social" required />
+            <span id="error-razon-social" class="error-message"></span>
             <input id="cif" type="text" placeholder="CIF"  />
             <input id="sector" type="text" placeholder="Sector" />
-            <input id="telefono" type="number" placeholder="Teléfono" />
+            <input id="telefono" type="number" placeholder="Teléfono" pattern="\d{9}"/>
+            <span id="error-telefono" class="error-message"></span>
             <input id="numero_empleados" type="number" placeholder="Nº de Empleados" />
-          </div>
-          <div>
-            <button className="button" type="button" onclick="registroClientes()">Enviar</button>
-          </div>
           
+            <button class="button" type="submit" onclick="registroClientes()">Enviar</button>
+          </div>
+        </form>
+
+      
+        <form >
+          <div  id="formulario-modificar-clientes" hidden>
+            <input id="razon_socialm"  type="text" placeholder="Razón social"  />
+            <input id="cifm" type="text" placeholder="CIF"  />
+            <input id="sectorm" type="text" placeholder="Sector" />
+            <input id="telefonom" type="number" placeholder="Teléfono" />
+            <input id="numero_empleadosm" type="number" placeholder="Nº de Empleados" />
+          
+            <button class="button" type="button" onclick="modificarClientes()">Modificar</button>
+          </div>
         </form>
       
     </section>
