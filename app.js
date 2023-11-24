@@ -1,5 +1,6 @@
 let express = require("express");
 let mysql = require("mysql2");
+const { message } = require("prompt");
 const app = express();
 
 app.use("/",express.static("public"));
@@ -173,11 +174,11 @@ x
 });
 
 /**
- * Termina Login y Registro ---------------------------------------------------------------------------
+ * Termina LOGIN y REGISTRO ---------------------------------------------------------------------------
  */
 
 /**
- * Endpoints para clientes-----------------------------------------------------------------------------
+ * Endpoints para CLIENTES-----------------------------------------------------------------------------
  */
 
 
@@ -219,18 +220,22 @@ app.post("/clientes/:id", function (request, response) {
 
   const clienteID = request.params.id;
 
- connection.query( `UPDATE clientes SET razon_social = "${razon_social}", cif = "${cif}", sector ="${sector}" , telefono = "${telefono}", numero_empleados = "${numero_empleados}" WHERE id = ${clienteID}`,
-    function (error, result, field) {
-      if (error) {
-        console.error(error);
-        response
-          .status(500)
-          .send(
-            "Error al insertar en la tabla empleados_clientes: " + error.message);
-        return;
-      }
-       response.send("Actualización de cliente en la base de datos");
-    });
+ connection.query(
+   "UPDATE clientes SET razon_social = ?, cif = ?, sector = ?, telefono = ?, numero_empleados = ? WHERE id = ?",
+   [razon_social, cif, sector, telefono, numero_empleados, clienteID],
+   function (error, result, field) {
+     if (error) {
+       console.error(error);
+       response
+         .status(500)
+         .send(
+           "Error al insertar en la tabla empleados_clientes: " + error.message
+         );
+       return;
+     }
+     response.send({message:"Actualización de cliente en la base de datos"});
+   }
+ );
    
   });
 
@@ -257,7 +262,7 @@ app.post("/clientes", function (request, response) {
 
   // Verificar si ya existe un cliente con el mismo ID
   connection.query(
-    `SELECT * FROM clientes WHERE id = ${clienteID}`,
+    `SELECT * FROM clientes WHERE razon_social = "${razon_social}"`,
     function (error, result, fields) {
       if (error) {
         console.error(error);

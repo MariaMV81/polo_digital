@@ -46,6 +46,7 @@ function listadoClick(id) {
       const containerDiv = document.getElementById("listado-clientes");
 
       // Rellenar los campos del formulario de modificar clientes
+      document.getElementById("idClienteModificar").value = json[0].id;
       document.getElementById("razon_socialm").value = json[0].razon_social;
       document.getElementById("cifm").value = json[0].cif;
       document.getElementById("sectorm").value = json[0].sector;
@@ -60,8 +61,8 @@ function listadoClick(id) {
       document.getElementById("formulario-modificar-clientes").hidden = false;
       containerDiv.innerHTML = `<h2>Modificar Cliente: <b>${json[0].razon_social}</b></h2><br><button onclick="volverClick()">regresar</button> `;
       console.log(json);
-      // Llama a modificarClientes con el id
-      modificarClientes(id);
+      
+   
     })
     .catch(function (error) {
       console.log(error);
@@ -85,7 +86,7 @@ function registroClientes() {
   const sector = document.getElementById("sector").value;
   const telefono = document.getElementById("telefono").value;
   const numero_empleados = document.getElementById("numero_empleados").value;
-   const clienteID = document.getElementById("clienteID").value;
+  
 
 
   console.log(razon_social, cif, sector, telefono, numero_empleados);
@@ -133,9 +134,12 @@ function modificarClientes(id) {
   const telefono = document.getElementById("telefonom").value;
   const numero_empleados = document.getElementById("numero_empleadosm").value;
 
+   const idCliente = document.getElementById("idClienteModificar").value;
+   console.log("ID del cliente a modificar:", idCliente);
 
-   fetch(`${host}/clientes/${id}`, {
-     method: "Post", 
+
+   fetch(`${host}/clientes/${idCliente}`, {
+     method: "POST", 
      headers: {
        "Content-Type": "application/json",
      },
@@ -145,9 +149,11 @@ function modificarClientes(id) {
        sector: sector,
        telefono: telefono,
        numero_empleados: numero_empleados,
+       
      }),
    })
      .then((response) => {
+      console.log("Respuesta del servidor:", response);
        if (!response.ok) {
          throw new Error("Error en la solicitud");
        }

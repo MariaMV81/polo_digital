@@ -44,7 +44,7 @@
         <h1>Formulario de Clientes</h1>
         <p>Rellene sus datos</p>
 
-        <form >
+       
           <div id="formulario-registro-clientes" > 
             <input id="razon_social"  type="text" placeholder="Razón social" required />
             <span id="error-razon-social" class="error-message"></span>
@@ -56,16 +56,18 @@
           
             <button class="button" type="submit" onclick="registroClientes()">Enviar</button>
           </div>
-        </form>
+        
 
       
         <form >
           <div  id="formulario-modificar-clientes" hidden>
+            
             <input id="razon_socialm"  type="text" placeholder="Razón social"  />
             <input id="cifm" type="text" placeholder="CIF"  />
             <input id="sectorm" type="text" placeholder="Sector" />
             <input id="telefonom" type="number" placeholder="Teléfono" />
             <input id="numero_empleadosm" type="number" placeholder="Nº de Empleados" />
+            <input id="idClienteModificar" type="text" placeholder="ID del Cliente" />
           
             <button class="button" type="button" onclick="modificarClientes()">Modificar</button>
           </div>
