@@ -21,17 +21,17 @@ body {
 
 .navbar-nav {
     margin: 40px;
+    
 }
 
 .nav-link {
-    color: #aec9e4;
+    color: #7fb0e0;
     margin-right: 40px;
     padding-right: 50px;
 }
 .nav-link :hover {
-    color: rgb(220, 220, 230);
- 
- 
+
+    color: rgb(245, 245, 248);
 }
 
 .form-control {
@@ -156,4 +156,3 @@ input[type="email"] {
     color: rgb(0, 0, 0);
 }
 
-/* Resto de estilos */

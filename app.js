@@ -177,6 +177,9 @@ x
  * Termina LOGIN y REGISTRO ---------------------------------------------------------------------------
  */
 
+
+
+
 /**
  * Endpoints para CLIENTES-----------------------------------------------------------------------------
  */
@@ -324,10 +327,152 @@ app.get("/clientes/:idClientes", function (request, response) {
  * Termina clientes -----------------------------------------------------------------------------------------------
  */
 
+
+
+
 /**
  * Endpoints mobilirio -----------------------------------------------------------------------------------------------
  */
 
+//Crea un nuevo mobiliario en la bbdd. Al igual que el anterior, recibe los datos del mobiliario en el cuerpo de la solicitud y el ID del mobiliario a través de mobiliarioID
+// Antes de realizar la inserción, verifica si ya existe un mobiliario con el mismo ID. Si el ID ya está en uso, devuelve un código de estado 400 indicando que ya existe 
+//un mobiliario con ese ID. Si no hay conflictos, realiza la inserción en la base de datos y devuelve un mensaje indicando que el mobiliario se ha insertado correctamente
+app.post("/mobiliario", function (request, response) {
+  const nombre = request.body.nombre;
+  const referrencia = request.body.referencia;
+  const tipo = request.body.tipo;
+  const estado = request.body.estado;
+
+
+  if (
+    !nombre ||
+    !referrencia ||
+    !tipo ||
+    !estado
+   
+  ) {
+    return response.status(400).send("Faltan datos obligatorios");
+  }
+
+  // Verificar si ya existe mobiliario con el mismo ID
+  connection.query(
+    `SELECT * FROM mobiliario WHERE nombre = "${nombre}"`,
+    function (error, result, fields) {
+      if (error) {
+        console.error(error);
+        response.status(500).send("Error al buscar el mobiliario por ID");
+        return;
+      }
+
+      // Si el mobiliario con el ID proporcionado ya existe, devolver un mensaje de error
+      if (result.length > 0) {
+        response.status(400).send("Ya existe un mobiliario con este ID");
+        return;
+      }
+
+      // Insertar el nuevo mobiliario en la base de datos
+
+      connection.query(
+        `INSERT INTO mobiliario (nombre, referencia, tipo, estado) VALUES ('${nombre}', '${referrencia}', '${tipo}', '${estado}')`,
+        function (error, result, fields) {
+          if (error) {
+            console.error(error);
+            response.status(500).send("Error al crear el mobiliario");
+            return;
+          }
+
+          console.log("mobiliario Insertado");
+          response
+            .status(200)
+            .json({ message: "mobiliario insertado correctamente" });
+        }
+      );
+    }
+  );
+});
+
+//Este endpoint se utiliza para obtener información detallada de un mobiliario específico. Recibe el ID del mobiliario a través de los parámetros de la URL (:idmobiliarios),
+// realiza una consulta a la base de datos para seleccionar ese mobiliario en particular y devuelve los datos en formato JSON como respuesta al mobiliario que realizó la solicitud
+/*extra*/
+app.post("/mobiliario/:idMobiliario", function (request, response) {
+  const idMobiliario = request.params.idMobiliario; 
+  const nombre = request.body.nombre;
+  const referencia = request.body.referencia;
+  const tipo = request.body.tipo;
+  const estado = request.body.estado;
+
+  if (!nombre || !referencia || !tipo || !estado) {
+    return response
+      .status(400)
+      .send("Faltan datos obligatorios en el cuerpo de la solicitud");
+  }
+
+  connection.query(
+    "UPDATE mobiliario SET nombre = ?, referencia = ?, tipo = ?, estado = ? WHERE id = ?",
+    [nombre, referencia, tipo, estado, idMobiliario],
+    function (error, result, fields) {
+      if (error) {
+        console.error("Error al modificar el mobiliario:", error);
+        response.status(500).send("Error al modificar el mobiliario");
+        return;
+      }
+
+      console.log("Mobiliario modificado correctamente");
+      response
+        .status(200)
+        .json({ message: "Mobiliario modificado correctamente" });
+    }
+  );
+});
+
+
+
+app.get("/mobiliario", function (request, response) {
+  
+
+  connection.query(
+    `SELECT * FROM mobiliario `,
+    function (error, result, fields) {
+      if (error) {
+        console.error(error);
+        response.status(500).send("Error al obtener el mobiliario");
+        return;
+      }
+
+      console.log(
+        "Lista de mobiliario",
+        result
+      );
+      response.json(result); // Enviar los datos del mobiliario al mobiliario que realiza la solicitud
+    }
+  );
+});
+
+app.get("/mobiliario/:idMobiliario", function (request, response) {
+  const idMobiliario = request.params.idMobiliario;
+
+  connection.query(
+    `SELECT * FROM mobiliario WHERE id = ${idMobiliario}`,
+    function (error, result, fields) {
+      if (error) {
+        console.error(error);
+        response.status(500).send("Error al obtener el mobiliario detallado");
+        return;
+      }
+
+      if (result.length === 0) {
+        response.status(404).send("Mobiliario no encontrado");
+        return;
+      }
+
+      // Enviar los datos del mobiliario detallado como JSON
+      response.json(result[0]);
+    }
+  );
+});
+
+  
+  
 /**
  * Termina mobiliario -----------------------------------------------------------------------------------------------
  */

@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mobiliario</title>
-    <link rel="stylesheet" href="/public/css/clientes.css" />
+    <link rel="stylesheet" href="/css/mobiliario.css" />
   </head>
   <body>
-    <div class="listado-container">
-      <ul class="listadoClientes">
+    <div  id="listado-mobiliario" class="listado-container">
+      <ul class="listadoMobiliario" id="mobiliario-list">
         <li>Mobiliario1</li>
         <li>Mobiliario2</li>
         <li>Mobiliario3</li>
@@ -16,27 +16,39 @@
         <li>Mobiliario5</li>
       </ul>
     </div>
-<div className="formulario-container"></div>
-    <section className="registrarse">
+<div class="formulario-container"></div>
+    <section class="registrarse">
       
         <h1>Mobiliario</h1>
         <p>Rellene o modifique los datos</p>
 
-        <form>
-          <div className="input-button">
-            <input type="text" placeholder="Nombre" name="Nombre" />
-            <input type="text" placeholder="Referencia" name="referencia" />
-            <input type="text" placeholder="Tipo" name="tipo" />
-            <input type="text" placeholder="Estado" name="estado" />
-            
-            
+        
+          <div id="formulario-registro-mobiliario">
+            <input id="nombre" type="text" placeholder="Nombre" name="Nombre" />
+            <input id="referencia" type="text" placeholder="Referencia" name="referencia" />
+            <input id="tipo" type="text" placeholder="Tipo" name="tipo" />
+            <input id="estado" type="number" placeholder="Estado" name="estado" /> 
+         
+            <button class="button" type="submit" onclick="registroMobiliario()">Enviar</button>
           </div>
-          <div>
-            <button className="button" type="submit">Enviar</button>
+
+          <form >
+          <div  id="formulario-modificar-mobiliario" hidden>
+            
+            <input id="nombrem"  type="text" placeholder="Nombre" name="Nombre"  />
+            <input id="referenciam" type="text" placeholder="Referencia" name="referencia"  />
+            <input id="tipom" placeholder="Tipo" name="tipo"  />
+            <input id="estadom" type="number" placeholder="Estado" name="estado" />
+            <input id="idMobiliarioModificar" type="number" placeholder="ID del Cliente" name="idMobiliarioModificar" />
+      
+          
+            <button class="button" type="button" onclick="modificarMobiliario()">Modificar</button>
           </div>
         </form>
+        
       
     </section>
 </div>
+<script src="/js/mobiliario.js"></script>
   </body>
 </html>

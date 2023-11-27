@@ -126,8 +126,6 @@ function registroClientes() {
  */
 
 function modificarClientes(id) {
-
-
   const razon_social = document.getElementById("razon_socialm").value;
   const cif = document.getElementById("cifm").value;
   const sector = document.getElementById("sectorm").value;
