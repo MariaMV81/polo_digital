@@ -3,7 +3,11 @@ let mysql = require("mysql2");
 const { message } = require("prompt");
 const app = express();
 
-app.use("/",express.static("public"));
+//Importar las bibliotecas:
+const { MongoClient } = require("mongodb");
+const mysql = require("mysql2");
+
+app.use("/", express.static("public"));
 app.use(express.json()); //oye que cuando haya body va a ser un json
 
 // crear conexion con mysql
@@ -13,6 +17,11 @@ const connection = mysql.createConnection({
   password: "08886544Mj",
   database: "polo_digital",
 });
+
+//Configurar la conexión a MongoDB:
+const mongourl = "mongodb://127.0.0.1:27017";
+const mongoConnection = new MongoClient(mongourl);
+let mongoDatabase;
 
 // conectar con mysql
 connection.connect(function (error) {
@@ -146,7 +155,7 @@ app.post("/registro", function (request, response) {
           }
 
           const usuarioid = result[0].id;
-x
+          x;
           // 3. Insertar en la tabla empleados_clientes el id del nuevo usuario creado
           connection.query(
             "INSERT INTO empleados_clientes (nombre, apellidos, usuarioID, clienteID, dni, telefono) VALUES (?, ?, ?, ?, ?, ?)", //? marcador de posicion: especifica los valores que se van a insertar, en lugar de valores concretos
@@ -160,7 +169,8 @@ x
                     "Error al insertar en la tabla empleados_clientes: " +
                       error.message
                   );
-                return;          ghvbv
+                return;
+                ghvbv;
               }
 
               console.log("Registro completado");
@@ -177,22 +187,16 @@ x
  * Termina LOGIN y REGISTRO ---------------------------------------------------------------------------
  */
 
-
-
-
 /**
  * Endpoints para CLIENTES-----------------------------------------------------------------------------
  */
-
 
 //Realiza una consulta a la base de datos para seleccionar todos los registros de la tabla "clientes". Luego devuelve estos datos en formato
 //json como respuesta al cliente que realizó la solicitud.
 app.get(`/clientes`, function (request, response) {
   connection.query(`select * from clientes`, function (error, result, sield) {
-
     let cliente = [];
-    for (let i = 0; i < result.length; i++){
-
+    for (let i = 0; i < result.length; i++) {
       cliente[i] = result[i];
     }
 
@@ -200,19 +204,15 @@ app.get(`/clientes`, function (request, response) {
 
     if (error) {
       console.error(error);
-      response
-        .status(500)
-        .send("Error al traer la tabla clientes " );
+      response.status(500).send("Error al traer la tabla clientes ");
       return;
     }
   });
   console.log("Listado de clientes en base de datos");
 });
 
-
-
 //Se uliliza para actualizar un cliente existente en la base de datos. Recibe los datos del cliente a través del cuerpo de la solicitud(razon_social...)
-//y el ID del cliente a actualizar se extra de los parametros de la url(":id"). Realiza una consulta"UPDATE" en la bbdd para modificar los datos del 
+//y el ID del cliente a actualizar se extra de los parametros de la url(":id"). Realiza una consulta"UPDATE" en la bbdd para modificar los datos del
 //cliente con el id proporcinado
 app.post("/clientes/:id", function (request, response) {
   let razon_social = request.body.razon_social;
@@ -223,27 +223,28 @@ app.post("/clientes/:id", function (request, response) {
 
   const clienteID = request.params.id;
 
- connection.query(
-   "UPDATE clientes SET razon_social = ?, cif = ?, sector = ?, telefono = ?, numero_empleados = ? WHERE id = ?",
-   [razon_social, cif, sector, telefono, numero_empleados, clienteID],
-   function (error, result, field) {
-     if (error) {
-       console.error(error);
-       response
-         .status(500)
-         .send(
-           "Error al insertar en la tabla empleados_clientes: " + error.message
-         );
-       return;
-     }
-     response.send({message:"Actualización de cliente en la base de datos"});
-   }
- );
-   
-  });
+  connection.query(
+    "UPDATE clientes SET razon_social = ?, cif = ?, sector = ?, telefono = ?, numero_empleados = ? WHERE id = ?",
+    [razon_social, cif, sector, telefono, numero_empleados, clienteID],
+    function (error, result, field) {
+      if (error) {
+        console.error(error);
+        response
+          .status(500)
+          .send(
+            "Error al insertar en la tabla empleados_clientes: " + error.message
+          );
+        return;
+      }
+      response.send({
+        message: "Actualización de cliente en la base de datos",
+      });
+    }
+  );
+});
 
 //Crea un nuevo cliente en la bbdd. Al igual que el anterior, recibe los datos del cliente en el cuerpo de la solicitud y el ID del cliente a través de clienteID
-// Antes de realizar la inserción, verifica si ya existe un cliente con el mismo ID. Si el ID ya está en uso, devuelve un código de estado 400 indicando que ya existe 
+// Antes de realizar la inserción, verifica si ya existe un cliente con el mismo ID. Si el ID ya está en uso, devuelve un código de estado 400 indicando que ya existe
 //un cliente con ese ID. Si no hay conflictos, realiza la inserción en la base de datos y devuelve un mensaje indicando que el cliente se ha insertado correctamente
 app.post("/clientes", function (request, response) {
   const razon_social = request.body.razon_social;
@@ -252,14 +253,7 @@ app.post("/clientes", function (request, response) {
   const telefono = request.body.telefono;
   const numero_empleados = request.body.numero_empleados;
 
-
-  if (
-    !razon_social ||
-    !cif ||
-    !sector ||
-    !telefono ||
-    !numero_empleados 
-  ) {
+  if (!razon_social || !cif || !sector || !telefono || !numero_empleados) {
     return response.status(400).send("Faltan datos obligatorios");
   }
 
@@ -304,7 +298,7 @@ app.post("/clientes", function (request, response) {
 // realiza una consulta a la base de datos para seleccionar ese cliente en particular y devuelve los datos en formato JSON como respuesta al cliente que realizó la solicitud
 /*extra*/
 app.get("/clientes/:idClientes", function (request, response) {
-  const idClientes = request.params.idClientes; 
+  const idClientes = request.params.idClientes;
 
   connection.query(
     `SELECT * FROM clientes WHERE id = ${idClientes}`,
@@ -320,22 +314,17 @@ app.get("/clientes/:idClientes", function (request, response) {
     }
   );
 });
-  
-
 
 /**
  * Termina clientes -----------------------------------------------------------------------------------------------
  */
-
-
-
 
 /**
  * Endpoints mobilirio -----------------------------------------------------------------------------------------------
  */
 
 //Crea un nuevo mobiliario en la bbdd. Al igual que el anterior, recibe los datos del mobiliario en el cuerpo de la solicitud y el ID del mobiliario a través de mobiliarioID
-// Antes de realizar la inserción, verifica si ya existe un mobiliario con el mismo ID. Si el ID ya está en uso, devuelve un código de estado 400 indicando que ya existe 
+// Antes de realizar la inserción, verifica si ya existe un mobiliario con el mismo ID. Si el ID ya está en uso, devuelve un código de estado 400 indicando que ya existe
 //un mobiliario con ese ID. Si no hay conflictos, realiza la inserción en la base de datos y devuelve un mensaje indicando que el mobiliario se ha insertado correctamente
 app.post("/mobiliario", function (request, response) {
   const nombre = request.body.nombre;
@@ -343,14 +332,7 @@ app.post("/mobiliario", function (request, response) {
   const tipo = request.body.tipo;
   const estado = request.body.estado;
 
-
-  if (
-    !nombre ||
-    !referrencia ||
-    !tipo ||
-    !estado
-   
-  ) {
+  if (!nombre || !referrencia || !tipo || !estado) {
     return response.status(400).send("Faltan datos obligatorios");
   }
 
@@ -395,7 +377,7 @@ app.post("/mobiliario", function (request, response) {
 // realiza una consulta a la base de datos para seleccionar ese mobiliario en particular y devuelve los datos en formato JSON como respuesta al mobiliario que realizó la solicitud
 /*extra*/
 app.post("/mobiliario/:idMobiliario", function (request, response) {
-  const idMobiliario = request.params.idMobiliario; 
+  const idMobiliario = request.params.idMobiliario;
   const nombre = request.body.nombre;
   const referencia = request.body.referencia;
   const tipo = request.body.tipo;
@@ -425,11 +407,7 @@ app.post("/mobiliario/:idMobiliario", function (request, response) {
   );
 });
 
-
-
 app.get("/mobiliario", function (request, response) {
-  
-
   connection.query(
     `SELECT * FROM mobiliario `,
     function (error, result, fields) {
@@ -439,10 +417,7 @@ app.get("/mobiliario", function (request, response) {
         return;
       }
 
-      console.log(
-        "Lista de mobiliario",
-        result
-      );
+      console.log("Lista de mobiliario", result);
       response.json(result); // Enviar los datos del mobiliario al mobiliario que realiza la solicitud
     }
   );
@@ -471,12 +446,16 @@ app.get("/mobiliario/:idMobiliario", function (request, response) {
   );
 });
 
-  
-  
 /**
  * Termina mobiliario -----------------------------------------------------------------------------------------------
  */
 
-app.listen(8000, function () {
+app.listen(8000, async function () {
+  await mongoConnection.connect();
+
+  console.log("Conectado a MongoDB!!!");
+
+  mongoDataBase = mongoConnection.db("polo_digital");
+
   console.log("Server up and running!!!");
 });
